@@ -1,5 +1,4 @@
-MinecraftJoypadSplitscreenMod
-=============================
+# MinecraftJoypadSplitscreenMod
 
 Joypad(Xinput) mod for Minecraft.
 
@@ -7,7 +6,7 @@ Joypad(Xinput) mod for Minecraft.
 Minecraft Forge
 https://files.minecraftforge.net/
 
-### Supports 
+#### Supports 
 Forge 1.12.2
 
 ## Install
@@ -20,4 +19,12 @@ Joypad ON / OFF switching exist to the control setting screen.
 If the joypad is ON, you can assign button.
 
 ### For more info:
+Forked:
+
+https://github.com/ljsimin/MinecraftJoypadSplitscreenMod
+
+forum:
+
 http://www.minecraftforum.net/topic/1213778-162-0151-joypad-mod-usb-controller-split-screen-over-60k-downloads/
+
+
