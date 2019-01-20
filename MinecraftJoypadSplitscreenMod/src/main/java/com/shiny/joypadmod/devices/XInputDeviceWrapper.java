@@ -1,22 +1,22 @@
 package com.shiny.joypadmod.devices;
 
-import com.ivan.xinput.XInputBatteryInformation;
-import com.ivan.xinput.XInputButtons;
-import com.ivan.xinput.XInputDevice;
-import com.ivan.xinput.XInputDevice14;
-import com.ivan.xinput.enums.XInputAxis;
-import com.ivan.xinput.enums.XInputBatteryDeviceType;
-import com.ivan.xinput.enums.XInputButton;
-import com.ivan.xinput.exceptions.XInputNotLoadedException;
+import com.github.strikerx3.jxinput.XInputBatteryInformation;
+import com.github.strikerx3.jxinput.XInputButtons;
+import com.github.strikerx3.jxinput.XInputDevice;
+import com.github.strikerx3.jxinput.XInputDevice14;
+import com.github.strikerx3.jxinput.enums.XInputAxis;
+import com.github.strikerx3.jxinput.enums.XInputBatteryDeviceType;
+import com.github.strikerx3.jxinput.enums.XInputButton;
+import com.github.strikerx3.jxinput.exceptions.XInputNotLoadedException;
 import com.shiny.joypadmod.helpers.LogHelper;
 
 public class XInputDeviceWrapper extends InputDevice {
 
 	public XInputDevice theDevice;
 	public Boolean xInput14 = false;
-	
+
 	float[] deadZones = new float[] { 0.15f,0.15f,0.15f,0.15f,0.15f,0.15f };
-	
+
 	public XInputDeviceWrapper(int index) {
 		super(index);
 
@@ -25,7 +25,7 @@ public class XInputDeviceWrapper extends InputDevice {
 	@Override
 	public String getName() {
 		String name = "XInput Device";
-		return name;		
+		return name;
 	}
 
 	@Override
@@ -35,23 +35,23 @@ public class XInputDeviceWrapper extends InputDevice {
 
 	@Override
 	public int getAxisCount() {
-		return 6;			
+		return 6;
 	}
 
 	@Override
 	public float getAxisValue(int axisIndex) {
-		float value = theDevice.getComponents().getAxes().get(XInputAxis.values()[axisIndex]); 		
+		float value = theDevice.getComponents().getAxes().get(XInputAxis.values()[axisIndex]);
 
 		if (Math.abs(value) > deadZones[axisIndex])
 		{
 			XInputAxis axis = XInputAxis.values()[axisIndex];
 			if (axis == XInputAxis.LEFT_THUMBSTICK_Y || axis == XInputAxis.RIGHT_THUMBSTICK_Y)
 					value *= -1;
-					
+
 			return value;
 		}
-		
-		return 0;	
+
+		return 0;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class XInputDeviceWrapper extends InputDevice {
 		String ret;
 		if (name.length() > 11)
 		{
-			ret = String.format("%s %s", name.substring(0, 9), name.charAt(name.length()-1));			
+			ret = String.format("%s %s", name.substring(0, 9), name.charAt(name.length()-1));
 		}
 		else
 			ret = name;
@@ -80,13 +80,13 @@ public class XInputDeviceWrapper extends InputDevice {
 
 	@Override
 	public Boolean isButtonPressed(int index) {
-		
+
 		return isPressed(XInputButton.values()[index], theDevice.getComponents().getButtons());
 	}
 
 	@Override
 	public Float getPovX() {
-		
+
 		if (theDevice.getDelta().getButtons().isPressed(XInputButton.DPAD_LEFT))
 			return -1.0f;
 		if (theDevice.getDelta().getButtons().isPressed(XInputButton.DPAD_RIGHT))
@@ -107,37 +107,37 @@ public class XInputDeviceWrapper extends InputDevice {
 	public void setDeadZone(int axisIndex, float value) {
 		deadZones[axisIndex] = value;
 	}
-	
+
 	protected void setIndex(int index, Boolean useXInput14)
 	{
 		try {
-						
+
 			if (useXInput14)
 			{
 				xInput14 = true;
 				theDevice = XInputDevice14.getDeviceFor(index);
 			}
-			else 
+			else
 				theDevice = XInputDevice.getDeviceFor(index);
 			myIndex = index;
 			theDevice.poll();
-		} catch (XInputNotLoadedException e) { 
+		} catch (XInputNotLoadedException e) {
 			LogHelper.Fatal("Failed calling setIndex on XInputDevice: " + e.toString());
 		}
 	}
 
 	@Override
 	public Boolean isConnected() {
-		return theDevice.isConnected();		
+		return theDevice.isConnected();
 	}
-	
+
 	@Override
 	public int getBatteryLevel()
 	{
 		try
 		{
 			XInputBatteryInformation gamepadBattInfo = ((XInputDevice14)theDevice).getBatteryInformation(XInputBatteryDeviceType.GAMEPAD);
-		
+
 			return gamepadBattInfo.getLevel().ordinal();
 		}
 		catch (Exception ex)
@@ -146,7 +146,7 @@ public class XInputDeviceWrapper extends InputDevice {
 		}
 	}
 
-	
+
     public Boolean isPressed(XInputButton buttonToCheck, XInputButtons buttons)
     {
     	switch(buttonToCheck)
@@ -176,15 +176,15 @@ public class XInputDeviceWrapper extends InputDevice {
     	case DPAD_DOWN:
     		return buttons.down;
     	case DPAD_LEFT:
-    		return buttons.left; 
+    		return buttons.left;
     	case DPAD_RIGHT:
     		return buttons.right;
     	case GUIDE_BUTTON:
     		return buttons.guide;
-    		
+
 		default:
 			return false;
-    	
+
     	}
     }
 }

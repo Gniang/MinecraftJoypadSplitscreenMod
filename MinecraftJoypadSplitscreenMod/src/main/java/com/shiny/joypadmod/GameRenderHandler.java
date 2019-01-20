@@ -144,12 +144,12 @@ public class GameRenderHandler
 		int batteryLevel = ControllerSettings.JoypadModInputLibrary.getCurrentController().getBatteryLevel();
 		if (batteryLevel != -1)
 		{
-			Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow("" + batteryLevel, 0, 0, 0xFFFF55 );	
+			Minecraft.getMinecraft().fontRenderer.drawStringWithShadow("" + batteryLevel, 0, 0, 0xFFFF55 );	
 		}*/
 		
 		if (displayCountDown > 0)
 		{
-			Minecraft.getMinecraft().fontRendererObj.drawStringWithShadow(displayMessage, 0, 0, 0xFFFF55 );	
+			Minecraft.getMinecraft().fontRenderer.drawStringWithShadow(displayMessage, 0, 0, 0xFFFF55 );	
 			displayCountDown--;
 		}
 

@@ -53,7 +53,7 @@ public class JoypadControlList extends GuiScrollingList
 	private int lastListSize = 0;
 	private int descriptionStartX;
 	private int controlButtonCenterOffset = 20;
-	
+
 	public static GuiTextField textInputName = null;
 
 	private static Minecraft mc = Minecraft.getMinecraft();
@@ -320,7 +320,7 @@ public class JoypadControlList extends GuiScrollingList
 			if (id == inputIndexToUpdate && controlButtonStr.equals("NONE"))
 				inputIndexToUpdate = -1;
 		}
-		
+
 		if (inputIndexToUpdate == id)
 		{
 			int key = parent.lastKeyCode;
@@ -331,9 +331,9 @@ public class JoypadControlList extends GuiScrollingList
 					String theKey = binding.inputEvent.getDescription();
 					if (theKey != "NONE")
 					{
-						 String newMapping = 
+						 String newMapping =
 								 this.textInputName.getText().length() > 0 ?
-								 this.textInputName.getText() : 
+								 this.textInputName.getText() :
 									 binding.inputEvent.getDescription();
 						// update the mapping
 						ControllerSettings.controllerUtils.updateCurrentJoypadMap(theKey, newMapping);
@@ -341,7 +341,7 @@ public class JoypadControlList extends GuiScrollingList
 				}
 				this.textInputName.setVisible(false);
 				inputIndexToUpdate = -1;
-			} 
+			}
 			else
 			{
 				if (!this.textInputName.getVisible())
@@ -351,8 +351,8 @@ public class JoypadControlList extends GuiScrollingList
 					textInputName.setText(controlButtonStr);
 					this.textInputName.setVisible(true);
 				}
-				textInputName.xPosition = x;
-				textInputName.yPosition = y;
+				textInputName.x = x;
+				textInputName.y = y;
 		        textInputName.drawTextBox();
 		        this.textInputName.setFocused(true);
 			}
@@ -361,13 +361,13 @@ public class JoypadControlList extends GuiScrollingList
 		else
 		{
 			controlButtonStr = this.fontRenderer.trimStringToWidth(controlButtonStr, controlButtonWidth - 2);
-	
+
 			GuiButton b = new GuiButton(10001, x, y, controlButtonWidth, buttonHeight, controlButtonStr);
-			b.func_191745_a(mc, k, i1,0);
-	
+			b.drawButton(mc, k, i1,0);
+
 			if (binding == null)
 				return;
-	
+
 			// - or x
 			// draw a minus if the button is currently valid
 			char optionRemove = McObfuscationHelper.symGet(JSyms.unbind);
@@ -381,13 +381,13 @@ public class JoypadControlList extends GuiScrollingList
 					// disable the button if the input is currently invalid
 					enable = false;
 			}
-	
+
 			if (enable)
 			{
 				// draw the remove/unbind option for this binding
 				b = new GuiButton(10002, x + controlButtonWidth, y, smallButtonWidth, buttonHeight, "" + optionRemove);
-				b.func_191745_a(mc, k, i1,0);
-	
+				b.drawButton(mc, k, i1,0);
+
 				// draw the toggle option button
 				if (binding.inputEvent.getEventType() != EventType.AXIS
 						&& !binding.bindingOptions.contains(BindingOptions.MENU_BINDING))
@@ -397,7 +397,7 @@ public class JoypadControlList extends GuiScrollingList
 						toggle = McObfuscationHelper.symGet(McObfuscationHelper.JSyms.fCircle);
 					b = new GuiButton(10003, x + controlButtonWidth + smallButtonWidth, y, smallButtonWidth, buttonHeight,
 							"" + toggle);
-					b.func_191745_a(mc, k, i1,0);
+					b.drawButton(mc, k, i1,0);
 				}
 			}
 		}
@@ -459,7 +459,7 @@ public class JoypadControlList extends GuiScrollingList
 							joyBindKeys.remove(id);
 							return false;
 						}
-	
+
 					}
 					else if (lastXClick <= x + controlButtonWidth + smallButtonWidth * 2)
 					{
@@ -473,9 +473,9 @@ public class JoypadControlList extends GuiScrollingList
 				}
 			}
 		}
-		
+
 		if (checkCancelInputWait)
-		{			
+		{
 			if (bindingIndexToUpdate != -1)
 			// click was outside so timeout the controller input wait
 				controllerTickStart = controllerInputTimeout + 1;
